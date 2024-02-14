@@ -35,3 +35,42 @@ exports.createList = (req,res) => {
         return res.status(201).json(result)
     })
 }
+
+// GET ALL LIST!
+exports.getLists = (req,res) => {
+    let q = "SELECT * from todos";
+
+    db.query(q,(err,result) => {
+      if(err) throw err;
+      return res.status(200).json(result)
+    })
+}
+
+exports.getSpecific = (req,res) => {
+    let q = "SELECT * from todos WHERE id = ?";
+    db.query(q,[req.params.id],(err,result) => {
+      if(err) throw err;
+      
+      return res.status(200).json(result);
+    })
+}
+
+// UPDATE SPECIFIC!
+exports.updateAny = (req,res) => {
+    let q = "UPDATE todos SET ? WHERE id = ?";
+
+    db.query(q,[req.body,req.params.id],(err,result) => {
+        if(err) throw err;
+
+        return res.status(200).json(result);
+    })
+}
+
+exports.deleteAny = (req,res) => {
+    let q = "DELETE FROM todos WHERE id = ?";
+    db.query(q,[req.params.id],(err,result) => {
+       if(err) throw err;
+       
+       return res.status(200).json("Task has been deleted!")
+    })
+}
