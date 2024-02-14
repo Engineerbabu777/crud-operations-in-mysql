@@ -22,3 +22,16 @@ exports.createTable = (req,res) => {
       return res.status(201).json("TABLE CREATED!")  
     })
 }
+
+// CREATE LIST!
+exports.createList = (req,res) => {
+    let q = 'INSERT INTO todos SET ?';
+
+    const {firstName,lastName,email,password} = req.body;
+
+    db.query(q,{firstName,lastName,email,password},(err,result) => {
+        if(err) throw err;
+
+        return res.status(201).json(result)
+    })
+}
